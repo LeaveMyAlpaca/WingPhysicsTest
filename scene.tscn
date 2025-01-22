@@ -1,0 +1,317 @@
+[gd_scene load_steps=13 format=3 uid="uid://cw85cc7mnb8rx"]
+
+[ext_resource type="Material" uid="uid://dp1mrvjuo0po8" path="res://Gridbox Prototype Materials/Materials/Box mat.tres" id="1_24cmr"]
+[ext_resource type="Material" uid="uid://bxkwjclja2js8" path="res://Gridbox Prototype Materials/Materials/Ground mat.tres" id="2_5tgxh"]
+[ext_resource type="Script" uid="uid://dltxl5j78pnd4" path="res://Wings/Wing.cs" id="3_fc11e"]
+[ext_resource type="Material" uid="uid://dno6n2t4wsqta" path="res://Gridbox Prototype Materials/Materials/wing mat.tres" id="3_o60ag"]
+[ext_resource type="Material" uid="uid://0d6jiiftvq0y" path="res://Gridbox Prototype Materials/Materials/alerone mat.tres" id="4_37ci4"]
+[ext_resource type="Resource" uid="uid://l0gqsglu5v7j" path="res://Wings/new_resource.tres" id="4_pk87y"]
+[ext_resource type="Script" uid="uid://bs1j51a685abq" path="res://Flap.cs" id="5_6iohr"]
+[ext_resource type="Script" uid="uid://mfo2mmhce20s" path="res://Wings/WingsManager.cs" id="6_hqp1j"]
+[ext_resource type="Script" uid="uid://c7apwm6bo2hdo" path="res://UIManager.cs" id="9_ewgce"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cwvfs"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e4srs"]
+lightmap_size_hint = Vector2i(45, 85)
+size = Vector3(1, 4.335, 41.305)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cn63b"]
+
+[node name="Scene" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(18.5234, 0, 0, 0, 1, 0, 0, 0, 23.5482, 0, 0, 0)
+material_override = ExtResource("1_24cmr")
+mesh = SubResource("PlaneMesh_cwvfs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.66409, 1.57114, 0)
+material_override = ExtResource("2_5tgxh")
+mesh = SubResource("BoxMesh_e4srs")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 1000.0
+
+[node name="wing" type="Node3D" parent="."]
+transform = Transform3D(-0.0708185, 0, 0.997489, 0, 1, 0, -0.997489, 0, -0.0708185, 1.1386, 1.42815, 0)
+script = ExtResource("3_fc11e")
+size = Vector2(1.185, 1.065)
+configResource = ExtResource("4_pk87y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="wing"]
+transform = Transform3D(1.30847, 0, 0, 0, -1.69445e-08, -0.151304, 0, 0.387645, -6.61369e-09, 0, 0, 0)
+material_override = ExtResource("3_o60ag")
+mesh = SubResource("CapsuleMesh_cn63b")
+
+[node name="flap" type="Node3D" parent="wing"]
+transform = Transform3D(1, 0, 0, 0, 0.999855, 0.0170336, 0, -0.0170336, 0.999855, 0, 0, 0.262721)
+script = ExtResource("5_6iohr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="wing/flap"]
+transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
+material_override = ExtResource("4_37ci4")
+mesh = SubResource("CapsuleMesh_cn63b")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="wing"]
+transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
+material_override = ExtResource("3_o60ag")
+mesh = SubResource("CapsuleMesh_cn63b")
+skeleton = NodePath("../..")
+
+[node name="wing2" type="Node3D" parent="."]
+transform = Transform3D(-0.0708185, 0, 0.997489, 0, 1, 0, -0.997489, 0, -0.0708185, 1.1386, 1.42815, 0)
+script = ExtResource("3_fc11e")
+size = Vector2(1.185, 1.065)
+configResource = ExtResource("4_pk87y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="wing2"]
+transform = Transform3D(1.30847, 0, 0, 0, -1.69445e-08, -0.151304, 0, 0.387645, -6.61369e-09, 0, 0, 0)
+material_override = ExtResource("3_o60ag")
+mesh = SubResource("CapsuleMesh_cn63b")
+
+[node name="flap" type="Node3D" parent="wing2"]
+transform = Transform3D(1, 0, 0, 0, 0.999855, 0.0170336, 0, -0.0170336, 0.999855, 0, 0, 0.262721)
+script = ExtResource("5_6iohr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="wing2/flap"]
+transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
+material_override = ExtResource("4_37ci4")
+mesh = SubResource("CapsuleMesh_cn63b")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="wing2"]
+transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
+material_override = ExtResource("3_o60ag")
+mesh = SubResource("CapsuleMesh_cn63b")
+skeleton = NodePath("../..")
+
+[node name="Wing manager" type="Node3D" parent="." node_paths=PackedStringArray("aerodynamicSurfaces")]
+script = ExtResource("6_hqp1j")
+gravity = 9.8
+aerodynamicSurfaces = [NodePath("../wing")]
+wind = Vector3(0, 0, 2)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.720236, -0.367096, 0.588642, 0, 0.848519, 0.529164, -0.693729, 0.381123, -0.611135, 0.0199013, 1.08174, -0.0773308)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LiftX", "LiftY", "LiftZ", "AoA", "wingsManager", "wing")]
+script = ExtResource("9_ewgce")
+WindX = NodePath("Wind/GridContainer/X")
+WindY = NodePath("Wind/GridContainer/Y")
+WindZ = NodePath("Wind/GridContainer/Z")
+rotX = NodePath("rotation/GridContainer/X")
+rotY = NodePath("rotation/GridContainer/Y")
+rotZ = NodePath("rotation/GridContainer/Z")
+AVelocityX = NodePath("air velocity/GridContainer/X")
+AVelocityY = NodePath("air velocity/GridContainer/Y")
+AVelocityZ = NodePath("air velocity/GridContainer/Z")
+LiftX = NodePath("Lift/GridContainer/X")
+LiftY = NodePath("Lift/GridContainer/Y")
+LiftZ = NodePath("Lift/GridContainer/Z")
+AoA = NodePath("Aoa/GridContainer/Label")
+wingsManager = NodePath("../Wing manager")
+wing = NodePath("../wing")
+
+[node name="Wind" type="Panel" parent="CanvasLayer"]
+offset_right = 287.0
+offset_bottom = 35.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Wind"]
+layout_mode = 0
+offset_left = 217.0
+offset_right = 282.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "Wind"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Wind"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/Wind/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
+alignment = 1
+
+[node name="Y" type="LineEdit" parent="CanvasLayer/Wind/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Y"
+alignment = 1
+
+[node name="Z" type="LineEdit" parent="CanvasLayer/Wind/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Z"
+alignment = 1
+
+[node name="air velocity" type="Panel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -73.0
+offset_right = 363.0
+offset_bottom = -38.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/air velocity"]
+layout_mode = 0
+offset_left = 217.0
+offset_right = 282.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "Air velocity"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/air velocity"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/air velocity/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
+alignment = 1
+
+[node name="Y" type="LineEdit" parent="CanvasLayer/air velocity/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Y"
+alignment = 1
+
+[node name="Z" type="LineEdit" parent="CanvasLayer/air velocity/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Z"
+alignment = 1
+
+[node name="Lift" type="Panel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -117.0
+offset_right = 362.0
+offset_bottom = -82.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Lift"]
+layout_mode = 0
+offset_left = 217.0
+offset_right = 282.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "Lift"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Lift"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/Lift/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
+alignment = 1
+
+[node name="Y" type="LineEdit" parent="CanvasLayer/Lift/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Y"
+alignment = 1
+
+[node name="Z" type="LineEdit" parent="CanvasLayer/Lift/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Z"
+alignment = 1
+
+[node name="rotation" type="Panel" parent="CanvasLayer"]
+offset_top = 46.0
+offset_right = 287.0
+offset_bottom = 81.0
+
+[node name="Label" type="Label" parent="CanvasLayer/rotation"]
+layout_mode = 0
+offset_left = 217.0
+offset_right = 282.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "rot."
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/rotation"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/rotation/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
+alignment = 1
+
+[node name="Y" type="LineEdit" parent="CanvasLayer/rotation/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Y"
+alignment = 1
+
+[node name="Z" type="LineEdit" parent="CanvasLayer/rotation/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Z"
+alignment = 1
+
+[node name="Aoa" type="Panel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+offset_right = 125.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Aoa"]
+layout_mode = 0
+offset_left = 70.0
+offset_right = 135.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "AoA
+"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Aoa"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/Aoa/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "AoA
+"
+vertical_alignment = 1
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.737277, -0.172577, 0.653176, 0, 0.966823, 0.255446, -0.67559, 0.188334, -0.712817, 3.312, 2.534, -2.369)
+fov = 59.8
