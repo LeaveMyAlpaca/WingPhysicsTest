@@ -20,7 +20,11 @@ public partial class UIManager : CanvasLayer
 	[Export] LineEdit LiftX;
 	[Export] LineEdit LiftY;
 	[Export] LineEdit LiftZ;
-	[ExportGroup("Output")]
+
+
+
+	[ExportGroup("Single")]
+	[Export] LineEdit flapAngle;
 	[Export] Label AoA;
 	[ExportGroup("Ref.")]
 	[Export] WingsManager wingsManager;
@@ -29,6 +33,8 @@ public partial class UIManager : CanvasLayer
 	public override void _Process(double delta)
 	{
 		AoA.Text = Math.Round(wing.angleOfAttack, 1).ToString();
+		if (float.TryParse(flapAngle.Text, out float angle))
+			wing.flapAngle = angle;
 
 		wind();
 		rot();
@@ -38,15 +44,15 @@ public partial class UIManager : CanvasLayer
 	}
 	private void Lift()
 	{
-		LiftX.Text = wing.CurrentLift.X.ToString();
-		LiftY.Text = wing.CurrentLift.Y.ToString();
-		LiftZ.Text = wing.CurrentLift.Z.ToString();
+		LiftX.Text = Math.Round(wing.CurrentLift.X, 1).ToString();
+		LiftY.Text = Math.Round(wing.CurrentLift.Y, 1).ToString();
+		LiftZ.Text = Math.Round(wing.CurrentLift.Z, 1).ToString();
 	}
 	private void AVelocity()
 	{
-		AVelocityX.Text = wing.airVelocity.X.ToString();
-		AVelocityY.Text = wing.airVelocity.Y.ToString();
-		AVelocityZ.Text = wing.airVelocity.Z.ToString();
+		AVelocityX.Text = Math.Round(wing.airVelocity.X, 1).ToString();
+		AVelocityY.Text = Math.Round(wing.airVelocity.Y, 1).ToString();
+		AVelocityZ.Text = Math.Round(wing.airVelocity.Z, 1).ToString();
 	}
 	private void wind()
 	{

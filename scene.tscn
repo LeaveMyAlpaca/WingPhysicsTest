@@ -50,9 +50,10 @@ transform = Transform3D(1.30847, 0, 0, 0, -1.69445e-08, -0.151304, 0, 0.387645, 
 material_override = ExtResource("3_o60ag")
 mesh = SubResource("CapsuleMesh_cn63b")
 
-[node name="flap" type="Node3D" parent="wing"]
+[node name="flap" type="Node3D" parent="wing" node_paths=PackedStringArray("wing")]
 transform = Transform3D(1, 0, 0, 0, 0.999855, 0.0170336, 0, -0.0170336, 0.999855, 0, 0, 0.262721)
 script = ExtResource("5_6iohr")
+wing = NodePath("..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="wing/flap"]
 transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
@@ -61,33 +62,6 @@ mesh = SubResource("CapsuleMesh_cn63b")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="wing"]
-transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
-material_override = ExtResource("3_o60ag")
-mesh = SubResource("CapsuleMesh_cn63b")
-skeleton = NodePath("../..")
-
-[node name="wing2" type="Node3D" parent="."]
-transform = Transform3D(-0.0708185, 0, 0.997489, 0, 1, 0, -0.997489, 0, -0.0708185, 1.1386, 1.42815, 0)
-script = ExtResource("3_fc11e")
-size = Vector2(1.185, 1.065)
-configResource = ExtResource("4_pk87y")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="wing2"]
-transform = Transform3D(1.30847, 0, 0, 0, -1.69445e-08, -0.151304, 0, 0.387645, -6.61369e-09, 0, 0, 0)
-material_override = ExtResource("3_o60ag")
-mesh = SubResource("CapsuleMesh_cn63b")
-
-[node name="flap" type="Node3D" parent="wing2"]
-transform = Transform3D(1, 0, 0, 0, 0.999855, 0.0170336, 0, -0.0170336, 0.999855, 0, 0, 0.262721)
-script = ExtResource("5_6iohr")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="wing2/flap"]
-transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
-material_override = ExtResource("4_37ci4")
-mesh = SubResource("CapsuleMesh_cn63b")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="wing2"]
 transform = Transform3D(1.30847, 0, 0, 0, -8.70615e-09, -0.0982573, 0, 0.199173, -4.29496e-09, 0, 0, 0.129445)
 material_override = ExtResource("3_o60ag")
 mesh = SubResource("CapsuleMesh_cn63b")
@@ -102,7 +76,7 @@ wind = Vector3(0, 0, 2)
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.720236, -0.367096, 0.588642, 0, 0.848519, 0.529164, -0.693729, 0.381123, -0.611135, 0.0199013, 1.08174, -0.0773308)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LiftX", "LiftY", "LiftZ", "AoA", "wingsManager", "wing")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LiftX", "LiftY", "LiftZ", "flapAngle", "AoA", "wingsManager", "wing")]
 script = ExtResource("9_ewgce")
 WindX = NodePath("Wind/GridContainer/X")
 WindY = NodePath("Wind/GridContainer/Y")
@@ -116,6 +90,7 @@ AVelocityZ = NodePath("air velocity/GridContainer/Z")
 LiftX = NodePath("Lift/GridContainer/X")
 LiftY = NodePath("Lift/GridContainer/Y")
 LiftZ = NodePath("Lift/GridContainer/Z")
+flapAngle = NodePath("flap angle/GridContainer/X")
 AoA = NodePath("Aoa/GridContainer/Label")
 wingsManager = NodePath("../Wing manager")
 wing = NodePath("../wing")
@@ -198,6 +173,32 @@ alignment = 1
 layout_mode = 2
 text = "0"
 placeholder_text = "Z"
+alignment = 1
+
+[node name="flap angle" type="Panel" parent="CanvasLayer"]
+offset_top = 91.0
+offset_right = 200.0
+offset_bottom = 126.0
+
+[node name="Label" type="Label" parent="CanvasLayer/flap angle"]
+layout_mode = 0
+offset_left = 70.0
+offset_right = 197.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "Flap angle"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/flap angle"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/flap angle/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
 alignment = 1
 
 [node name="Lift" type="Panel" parent="CanvasLayer"]

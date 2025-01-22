@@ -74,7 +74,7 @@ public partial class Wing : Node3D
 		// we don't need higher AoA
 		angleOfAttack = Mathf.Clamp(angleOfAttack, -90, 90);
 
-		float flapModifier = /* config.flapsValueModifierBasedOnAoA.SampleBaked(angleOfAttack) * config.flapsModifierBasedOnFlapAngle.SampleBaked(flapAngle) */ 0;
+		float flapModifier = config.flapsValueModifierBasedOnAoA.SampleBaked(angleOfAttack) * config.flapsModifierBasedOnFlapAngle.SampleBaked(flapAngle);
 		liftC = config.liftBasedOnAoA.SampleBaked(angleOfAttack) * config.forcesModifiers.Y + config.flapModifierBasedOnAxis.Y * flapModifier;
 		dragC = config.dragBasedOnAoA.SampleBaked(angleOfAttack) * config.forcesModifiers.Z + config.flapModifierBasedOnAxis.Z * flapModifier;
 		torqueC = config.torqueBasedOnAoA.SampleBaked(angleOfAttack) * config.forcesModifiers.X + config.flapModifierBasedOnAxis.X * flapModifier;
