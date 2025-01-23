@@ -48,7 +48,7 @@ public partial class Wing : Node3D
 		this.airVelocity = airVelocity;
 		Vector3 dragDirection = airVelocity.Normalized();
 
-		liftDirection = Quaternion.FromEuler(LiftDirectionModifier) * dragDirection;
+		liftDirection = /* Quaternion.FromEuler(LiftDirectionModifier) * dragDirection */ Basis.Y;
 
 		float area = size.X * size.Y;
 		float dynamicPressure = 0.5f * airDensity * airVelocity.LengthSquared();
