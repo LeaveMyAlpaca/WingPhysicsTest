@@ -3,7 +3,7 @@ using Godot;
 public partial class WingsManager : Node3D
 {
     [Export] public float gravity;
-    [Export] public Wing[] aerodynamicSurfaces = null;
+    [Export] public Wing[] wings = null;
 
     [Export] public Vector3 wind;
     public override void _PhysicsProcess(double delta)
@@ -16,7 +16,7 @@ public partial class WingsManager : Node3D
     {
         forces = new();
         torque = new();
-        foreach (var surface in aerodynamicSurfaces)
+        foreach (var surface in wings)
         {
             surface.CalculateForces(wind, airDensity, GlobalPosition, out Vector3 _forces, out Vector3 _torque);
             forces += _forces;
