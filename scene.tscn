@@ -42,12 +42,6 @@ material_override = ExtResource("2_5tgxh")
 mesh = SubResource("BoxMesh_e4srs")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-axis_lock_linear_x = true
-axis_lock_linear_y = true
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 mass = 1000.0
 
 [node name="wing" type="Node3D" parent="."]
@@ -78,16 +72,16 @@ material_override = ExtResource("3_o60ag")
 mesh = SubResource("CapsuleMesh_cn63b")
 skeleton = NodePath("../..")
 
-[node name="Wing manager" type="Node3D" parent="." node_paths=PackedStringArray("aerodynamicSurfaces")]
+[node name="Wing manager" type="Node3D" parent="." node_paths=PackedStringArray("wings")]
 script = ExtResource("6_hqp1j")
 gravity = 9.8
-aerodynamicSurfaces = [NodePath("../wing")]
+wings = [NodePath("../wing")]
 wind = Vector3(0, 0, 2)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.720236, -0.367096, 0.588642, 0, 0.848519, 0.529164, -0.693729, 0.381123, -0.611135, 0.0199013, 1.08174, -0.0773308)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LiftX", "LiftY", "LiftZ", "flapAngle", "AoA", "wingsManager", "wing")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LiftX", "LiftY", "LiftZ", "TorqueX", "TorqueY", "TorqueZ", "flapAngle", "AoA", "wingsManager", "wing")]
 script = ExtResource("9_ewgce")
 WindX = NodePath("Wind/GridContainer/X")
 WindY = NodePath("Wind/GridContainer/Y")
@@ -101,6 +95,9 @@ AVelocityZ = NodePath("air velocity/GridContainer/Z")
 LiftX = NodePath("Lift/GridContainer/X")
 LiftY = NodePath("Lift/GridContainer/Y")
 LiftZ = NodePath("Lift/GridContainer/Z")
+TorqueX = NodePath("Torque/GridContainer/X")
+TorqueY = NodePath("Torque/GridContainer/Y")
+TorqueZ = NodePath("Torque/GridContainer/Z")
 flapAngle = NodePath("flap angle/GridContainer/X")
 AoA = NodePath("Aoa/GridContainer/Label")
 wingsManager = NodePath("../Wing manager")
@@ -342,6 +339,49 @@ placeholder_text = "Y"
 alignment = 1
 
 [node name="Z" type="LineEdit" parent="CanvasLayer/Lift/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Z"
+alignment = 1
+
+[node name="Torque" type="Panel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -162.0
+offset_right = 362.0
+offset_bottom = -127.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Torque"]
+layout_mode = 0
+offset_left = 217.0
+offset_right = 282.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "Torque"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Torque"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/Torque/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
+alignment = 1
+
+[node name="Y" type="LineEdit" parent="CanvasLayer/Torque/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Y"
+alignment = 1
+
+[node name="Z" type="LineEdit" parent="CanvasLayer/Torque/GridContainer"]
 layout_mode = 2
 text = "0"
 placeholder_text = "Z"

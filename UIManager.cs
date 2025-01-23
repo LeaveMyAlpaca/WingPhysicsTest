@@ -20,7 +20,10 @@ public partial class UIManager : CanvasLayer
 	[Export] LineEdit LiftX;
 	[Export] LineEdit LiftY;
 	[Export] LineEdit LiftZ;
-
+	[ExportGroup("Torque")]
+	[Export] LineEdit TorqueX;
+	[Export] LineEdit TorqueY;
+	[Export] LineEdit TorqueZ;
 
 
 	[ExportGroup("Single")]
@@ -40,13 +43,19 @@ public partial class UIManager : CanvasLayer
 		rot();
 		AVelocity();
 		Lift();
-
+		Torque();
 	}
 	private void Lift()
 	{
 		LiftX.Text = Math.Round(wing.CurrentLift.X, 1).ToString();
 		LiftY.Text = Math.Round(wing.CurrentLift.Y, 1).ToString();
 		LiftZ.Text = Math.Round(wing.CurrentLift.Z, 1).ToString();
+	}
+	private void Torque()
+	{
+		TorqueX.Text = Math.Round(wing.CurrentTorque.X, 1).ToString();
+		TorqueY.Text = Math.Round(wing.CurrentTorque.Y, 1).ToString();
+		TorqueZ.Text = Math.Round(wing.CurrentTorque.Z, 1).ToString();
 	}
 	private void AVelocity()
 	{

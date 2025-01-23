@@ -23,7 +23,7 @@ public partial class Wing : Node3D
 		if (config.displaySize)
 			DebugDraw3D.DrawBox(GlobalPosition, Quaternion.FromEuler(GlobalRotation)/* + Quaternion */, new(size.X, wingDisplayHeight, size.Y), config.debugColor, is_box_centered: true);
 		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + airVelocity, color: Colors.BlanchedAlmond, arrow_size: .1f);
-		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + Quaternion * -Vector3.Forward, color: Colors.Black, arrow_size: .1f);
+		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + SurfaceDirectionVector, color: Colors.Black, arrow_size: .1f);
 		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + liftDirection, color: Colors.DarkBlue, arrow_size: .1f);
 		/* 			DebugDraw3D.DrawLine(GlobalPosition + Vector3.Up * .2f, GlobalPosition + CurrentLift, color: Colors.Brown);
 		 */
@@ -36,18 +36,19 @@ public partial class Wing : Node3D
 		DebugDraw3D.Config.LineAfterHitColor = new(252, 85, 7, .4f);
 	}
 	public Vector3 SurfaceDirectionVector => Quaternion * Vector3.Back;
+	public Vector3 LiftDirectionModifier = Vector3.Left * Mathf.DegToRad(90);
 	[Export] public float flapAngle;
 	public float angleOfAttack;
-	public void CalculateForces(Vector3 airVelocity, float airDensity, Vector3 relativePosition, out Vector3 forces, out Vector3 torque)
+	public void CalculateForces(Vector3 airVelocity, float airDensity, Vector3 centreOfMassGlobalPosition, out Vector3 forces, out Vector3 torque)
 	{
 
-		if (configResource is not WingConfig config)
-			throw new();
+		/* if (configResource is not WingConfig config)
+			throw new(); */
 
 		this.airVelocity = airVelocity;
 		Vector3 dragDirection = airVelocity.Normalized();
 
-		liftDirection = Quaternion.FromEuler(-Vector3.Right * Mathf.DegToRad(90)) * dragDirection;
+		liftDirection = Quaternion.FromEuler(LiftDirectionModifier) * dragDirection;
 
 		float area = size.X * size.Y;
 		float dynamicPressure = 0.5f * airDensity * airVelocity.LengthSquared();
@@ -60,9 +61,13 @@ public partial class Wing : Node3D
 		CalculateCoefficients(angleOfAttack, flapAngle, out float liftC, out float dragC, out float torqueC);
 		Vector3 lift = liftDirection * liftC * dynamicPressure * area;
 		Vector3 drag = dragDirection * dragC * dynamicPressure * area;
+		forces = lift + drag;
+
 		torque = -Basis.Z * torqueC * dynamicPressure * area * size.Y;
 
-		forces = lift + drag;
+		var relativePosition = GlobalPosition - centreOfMassGlobalPosition;
+
+		torque += relativePosition.Cross(forces);
 
 		CurrentLift = lift;
 		CurrentDrag = drag;
