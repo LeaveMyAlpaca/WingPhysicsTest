@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://dno6n2t4wsqta" path="res://Gridbox Prototype Materials/Materials/wing mat.tres" id="3_o60ag"]
 [ext_resource type="Material" uid="uid://0d6jiiftvq0y" path="res://Gridbox Prototype Materials/Materials/alerone mat.tres" id="4_37ci4"]
 [ext_resource type="Resource" uid="uid://l0gqsglu5v7j" path="res://Wings/default Wing configuration.tres" id="4_pk87y"]
-[ext_resource type="Script" uid="uid://bs1j51a685abq" path="res://Flap.cs" id="5_6iohr"]
+[ext_resource type="Script" uid="uid://bs1j51a685abq" path="res://Wings/Flap.cs" id="5_6iohr"]
 [ext_resource type="Script" uid="uid://mfo2mmhce20s" path="res://Wings/WingsManager.cs" id="6_hqp1j"]
 [ext_resource type="Script" uid="uid://c7apwm6bo2hdo" path="res://UIManager.cs" id="9_ewgce"]
 [ext_resource type="Texture2D" uid="uid://cm417hk7yxump" path="res://SkySeries Freebie/FreebieHdri/DayInTheClouds4k.hdr" id="10_5juve"]
