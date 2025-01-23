@@ -1,14 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://cw85cc7mnb8rx"]
+[gd_scene load_steps=17 format=3 uid="uid://cw85cc7mnb8rx"]
 
 [ext_resource type="Material" uid="uid://dp1mrvjuo0po8" path="res://Gridbox Prototype Materials/Materials/Box mat.tres" id="1_24cmr"]
 [ext_resource type="Material" uid="uid://bxkwjclja2js8" path="res://Gridbox Prototype Materials/Materials/Ground mat.tres" id="2_5tgxh"]
 [ext_resource type="Script" uid="uid://dltxl5j78pnd4" path="res://Wings/Wing.cs" id="3_fc11e"]
 [ext_resource type="Material" uid="uid://dno6n2t4wsqta" path="res://Gridbox Prototype Materials/Materials/wing mat.tres" id="3_o60ag"]
 [ext_resource type="Material" uid="uid://0d6jiiftvq0y" path="res://Gridbox Prototype Materials/Materials/alerone mat.tres" id="4_37ci4"]
-[ext_resource type="Resource" uid="uid://l0gqsglu5v7j" path="res://Wings/new_resource.tres" id="4_pk87y"]
+[ext_resource type="Resource" uid="uid://l0gqsglu5v7j" path="res://Wings/default Wing configuration.tres" id="4_pk87y"]
 [ext_resource type="Script" uid="uid://bs1j51a685abq" path="res://Flap.cs" id="5_6iohr"]
 [ext_resource type="Script" uid="uid://mfo2mmhce20s" path="res://Wings/WingsManager.cs" id="6_hqp1j"]
 [ext_resource type="Script" uid="uid://c7apwm6bo2hdo" path="res://UIManager.cs" id="9_ewgce"]
+[ext_resource type="Texture2D" uid="uid://cm417hk7yxump" path="res://SkySeries Freebie/FreebieHdri/DayInTheClouds4k.hdr" id="10_5juve"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_cwvfs"]
 
@@ -17,6 +18,16 @@ lightmap_size_hint = Vector2i(45, 85)
 size = Vector3(1, 4.335, 41.305)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cn63b"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fy5k1"]
+panorama = ExtResource("10_5juve")
+
+[sub_resource type="Sky" id="Sky_5c1cw"]
+sky_material = SubResource("PanoramaSkyMaterial_fy5k1")
+
+[sub_resource type="Environment" id="Environment_akxrc"]
+background_mode = 2
+sky = SubResource("Sky_5c1cw")
 
 [node name="Scene" type="Node3D"]
 
@@ -131,6 +142,98 @@ layout_mode = 2
 text = "0"
 placeholder_text = "Z"
 alignment = 1
+
+[node name="Arrows legend" type="Panel" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -228.0
+offset_bottom = 274.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Arrows legend"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.5
+offset_right = 32.5
+offset_bottom = 36.0
+grow_horizontal = 2
+tooltip_text = "Arrows
+"
+theme_override_font_sizes/font_size = 26
+text = "Arrows legend:"
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Arrows legend"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Arrows legend/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Arrows
+"
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Drag"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Arrows legend/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Arrows
+"
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Lift"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Arrows legend/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Arrows
+"
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Torque"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CanvasLayer/Arrows legend/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Arrows
+"
+theme_override_colors/font_color = Color(0, 0, 0.545098, 1)
+theme_override_font_sizes/font_size = 26
+text = " Lift direction"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CanvasLayer/Arrows legend/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Arrows
+"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Wing direction"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label6" type="Label" parent="CanvasLayer/Arrows legend/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Arrows
+"
+theme_override_colors/font_color = Color(1, 0.921569, 0.803922, 1)
+theme_override_font_sizes/font_size = 26
+text = "Air velocity"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="air velocity" type="Panel" parent="CanvasLayer"]
 anchors_preset = 2
@@ -316,3 +419,6 @@ vertical_alignment = 1
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.737277, -0.172577, 0.653176, 0, 0.966823, 0.255446, -0.67559, 0.188334, -0.712817, 3.312, 2.534, -2.369)
 fov = 59.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_akxrc")

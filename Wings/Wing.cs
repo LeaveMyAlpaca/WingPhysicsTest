@@ -15,11 +15,13 @@ public partial class Wing : Node3D
 	private const float wingDisplayHeight = .1f;
 	public override void _Process(double delta)
 	{
+
 		if (configResource is not WingConfig config)
 			return;
 		DebugDraw3D.Config.LineHitColor = new(252, 85, 7, .4f);
 		DebugDraw3D.DebugEnabled = true;
-		DebugDraw3D.DrawBox(GlobalPosition, Quaternion.FromEuler(GlobalRotation)/* + Quaternion */, new(size.X, wingDisplayHeight, size.Y), config.debugColor, is_box_centered: true);
+		if (config.displaySize)
+			DebugDraw3D.DrawBox(GlobalPosition, Quaternion.FromEuler(GlobalRotation)/* + Quaternion */, new(size.X, wingDisplayHeight, size.Y), config.debugColor, is_box_centered: true);
 		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + airVelocity, color: Colors.BlanchedAlmond, arrow_size: .1f);
 		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + Quaternion * -Vector3.Forward, color: Colors.Black, arrow_size: .1f);
 		DebugDraw3D.DrawArrow(GlobalPosition, GlobalPosition + liftDirection, color: Colors.DarkBlue, arrow_size: .1f);
