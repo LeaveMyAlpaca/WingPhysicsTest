@@ -16,6 +16,10 @@ public partial class UIManager : CanvasLayer
 	[Export] LineEdit AVelocityX;
 	[Export] LineEdit AVelocityY;
 	[Export] LineEdit AVelocityZ;
+	[ExportGroup("LocalAVelocity")]
+	[Export] LineEdit LocalAVelocityX;
+	[Export] LineEdit LocalAVelocityY;
+	[Export] LineEdit LocalAVelocityZ;
 	[ExportGroup("Lift")]
 	[Export] LineEdit LiftX;
 	[Export] LineEdit LiftY;
@@ -42,6 +46,8 @@ public partial class UIManager : CanvasLayer
 		wind();
 		rot();
 		AVelocity();
+		LocalAVelocity();
+
 		Lift();
 		Torque();
 	}
@@ -62,6 +68,12 @@ public partial class UIManager : CanvasLayer
 		AVelocityX.Text = Math.Round(wing.airVelocity.X, 1).ToString();
 		AVelocityY.Text = Math.Round(wing.airVelocity.Y, 1).ToString();
 		AVelocityZ.Text = Math.Round(wing.airVelocity.Z, 1).ToString();
+	}
+	private void LocalAVelocity()
+	{
+		LocalAVelocityX.Text = Math.Round(wing.localAirVelocity.X, 1).ToString();
+		LocalAVelocityY.Text = Math.Round(wing.localAirVelocity.Y, 1).ToString();
+		LocalAVelocityZ.Text = Math.Round(wing.localAirVelocity.Z, 1).ToString();
 	}
 	private void wind()
 	{

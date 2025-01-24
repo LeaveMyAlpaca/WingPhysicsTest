@@ -81,7 +81,7 @@ wind = Vector3(0, 0, 2)
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.720236, -0.367096, 0.588642, 0, 0.848519, 0.529164, -0.693729, 0.381123, -0.611135, 0.0199013, 1.08174, -0.0773308)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LiftX", "LiftY", "LiftZ", "TorqueX", "TorqueY", "TorqueZ", "flapAngle", "AoA", "wingsManager", "wing")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("WindX", "WindY", "WindZ", "rotX", "rotY", "rotZ", "AVelocityX", "AVelocityY", "AVelocityZ", "LocalAVelocityX", "LocalAVelocityY", "LocalAVelocityZ", "LiftX", "LiftY", "LiftZ", "TorqueX", "TorqueY", "TorqueZ", "flapAngle", "AoA", "wingsManager", "wing")]
 script = ExtResource("9_ewgce")
 WindX = NodePath("Wind/GridContainer/X")
 WindY = NodePath("Wind/GridContainer/Y")
@@ -92,6 +92,9 @@ rotZ = NodePath("rotation/GridContainer/Z")
 AVelocityX = NodePath("air velocity/GridContainer/X")
 AVelocityY = NodePath("air velocity/GridContainer/Y")
 AVelocityZ = NodePath("air velocity/GridContainer/Z")
+LocalAVelocityX = NodePath("local air velocity/GridContainer/X")
+LocalAVelocityY = NodePath("local air velocity/GridContainer/Y")
+LocalAVelocityZ = NodePath("local air velocity/GridContainer/Z")
 LiftX = NodePath("Lift/GridContainer/X")
 LiftY = NodePath("Lift/GridContainer/Y")
 LiftZ = NodePath("Lift/GridContainer/Z")
@@ -232,14 +235,56 @@ text = "Air velocity"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="local air velocity" type="Panel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -74.0
+offset_right = 422.0
+offset_bottom = -39.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/local air velocity"]
+layout_mode = 0
+offset_left = 217.0
+offset_right = 282.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "local air velocity"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/local air velocity"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/local air velocity/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
+alignment = 1
+
+[node name="Y" type="LineEdit" parent="CanvasLayer/local air velocity/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Y"
+alignment = 1
+
+[node name="Z" type="LineEdit" parent="CanvasLayer/local air velocity/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "Z"
+alignment = 1
+
 [node name="air velocity" type="Panel" parent="CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
-offset_top = -73.0
+offset_top = -116.0
 offset_right = 363.0
-offset_bottom = -38.0
+offset_bottom = -81.0
 grow_vertical = 0
 
 [node name="Label" type="Label" parent="CanvasLayer/air velocity"]
@@ -275,40 +320,14 @@ text = "0"
 placeholder_text = "Z"
 alignment = 1
 
-[node name="flap angle" type="Panel" parent="CanvasLayer"]
-offset_top = 91.0
-offset_right = 200.0
-offset_bottom = 126.0
-
-[node name="Label" type="Label" parent="CanvasLayer/flap angle"]
-layout_mode = 0
-offset_left = 70.0
-offset_right = 197.0
-offset_bottom = 36.0
-theme_override_font_sizes/font_size = 26
-text = "Flap angle"
-vertical_alignment = 1
-
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/flap angle"]
-layout_mode = 0
-offset_right = 221.0
-offset_bottom = 32.0
-columns = 3
-
-[node name="X" type="LineEdit" parent="CanvasLayer/flap angle/GridContainer"]
-layout_mode = 2
-text = "0"
-placeholder_text = "X"
-alignment = 1
-
 [node name="Lift" type="Panel" parent="CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 1.0
-offset_top = -117.0
+offset_top = -160.0
 offset_right = 362.0
-offset_bottom = -82.0
+offset_bottom = -125.0
 grow_vertical = 0
 
 [node name="Label" type="Label" parent="CanvasLayer/Lift"]
@@ -349,9 +368,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 1.0
-offset_top = -162.0
+offset_top = -205.0
 offset_right = 362.0
-offset_bottom = -127.0
+offset_bottom = -170.0
 grow_vertical = 0
 
 [node name="Label" type="Label" parent="CanvasLayer/Torque"]
@@ -385,6 +404,32 @@ alignment = 1
 layout_mode = 2
 text = "0"
 placeholder_text = "Z"
+alignment = 1
+
+[node name="flap angle" type="Panel" parent="CanvasLayer"]
+offset_top = 91.0
+offset_right = 200.0
+offset_bottom = 126.0
+
+[node name="Label" type="Label" parent="CanvasLayer/flap angle"]
+layout_mode = 0
+offset_left = 70.0
+offset_right = 197.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 26
+text = "Flap angle"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/flap angle"]
+layout_mode = 0
+offset_right = 221.0
+offset_bottom = 32.0
+columns = 3
+
+[node name="X" type="LineEdit" parent="CanvasLayer/flap angle/GridContainer"]
+layout_mode = 2
+text = "0"
+placeholder_text = "X"
 alignment = 1
 
 [node name="rotation" type="Panel" parent="CanvasLayer"]

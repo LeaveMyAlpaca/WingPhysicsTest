@@ -37,6 +37,7 @@ public partial class Wing : Node3D
 	}
 	public Vector3 SurfaceDirectionVector => Quaternion * Vector3.Back;
 	public Vector3 LiftDirectionModifier = Vector3.Left * Mathf.DegToRad(90);
+	public Vector3 localAirVelocity;
 	[Export] public float flapAngle;
 	public float angleOfAttack;
 	public void CalculateForces(Vector3 airVelocity, float airDensity, Vector3 centreOfMassGlobalPosition, out Vector3 forces, out Vector3 torque)
@@ -53,10 +54,10 @@ public partial class Wing : Node3D
 		float area = size.X * size.Y;
 		float dynamicPressure = 0.5f * airDensity * airVelocity.LengthSquared();
 
-		var rotatedAirVelocity = Quaternion * airVelocity;
+		localAirVelocity = GlobalTransform.Basis.Inverse() * airVelocity;
 		// https://en.wikipedia.org/wiki/Lift_(force)
 		if (airVelocity != Vector3.Zero)
-			angleOfAttack = (SurfaceDirectionVector.Y <= dragDirection.Y ? 1 : -1) * Mathematics.GetAngleBetween(SurfaceDirectionVector, dragDirection);
+			angleOfAttack = Mathf.RadToDeg(Mathf.Atan2(localAirVelocity.Y, localAirVelocity.Z));
 		else angleOfAttack = 0;
 		CalculateCoefficients(angleOfAttack, flapAngle, out float liftC, out float dragC, out float torqueC);
 		Vector3 lift = liftDirection * liftC * dynamicPressure * area;
