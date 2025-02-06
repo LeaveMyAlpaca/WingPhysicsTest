@@ -1,6 +1,6 @@
 # Wing physics test
 I made this program to simulate real life aerodynamic physics of airfoil.
-# full airplane simulation: https://github.com/LeaveMyAlpaca/Flight-sim
+# [full airplane simulation] (https://github.com/LeaveMyAlpaca/Flight-sim)
 
 Setup:
 1. 
